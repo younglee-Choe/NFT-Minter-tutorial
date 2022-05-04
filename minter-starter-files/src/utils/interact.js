@@ -5,7 +5,7 @@ const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
 const web3 = createAlchemyWeb3(alchemyKey);
 
 const contractABI = require('../contract-abi.json');
-const contractAddress = "0x55e1E91CE5fceE560DA4F9AcFE2E8447ec176D01";
+const contractAddress = "0x55e1E91CE5fceE560DA4F9AcFE2E8447ec176D01";   // Metamask account
 
 export const mintNFT = async (url, name, description) => {
     if (url.trim() == "" || (name.trim() == "" || description.trim() == "")) {
@@ -15,11 +15,13 @@ export const mintNFT = async (url, name, description) => {
         }
     }
 
+    // make Metadata
     const metadata = new Object();
     metadata.name = name;
     metadata.image = url;
     metadata.description = description;
 
+    // make pinata call
     const pinataResponse = await pinJSONToIPFS(metadata);
     if (!pinataResponse.success) {
         return {
